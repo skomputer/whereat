@@ -1,0 +1,6 @@
+{
+  "public": {
+    "cellyAppId": "CELLY_APP_ID"
+  },
+  "cellyAppSecret": "CELLY_APP_SECRET"
+}

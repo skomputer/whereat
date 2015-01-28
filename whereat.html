@@ -1,0 +1,30 @@
+<head>
+  <title>whereat</title>
+</head>
+
+<body>
+</body>
+
+<template name="layout">
+  <header>
+    {{> loginButtons}}
+    <h1>whereat</h1>
+  </header>
+
+  {{> yield}}
+</template>
+
+<template name="home">
+  {{#if currentUser}}
+    {{#if currentUser.cellyToken}}
+      token: {{currentUser.cellyToken}}<br>
+      <a href="https://cel.ly/api/authorize?client_id={{cellyAppId}}&redirect_uri=http://localhost:4000/cellyAuthCallback/{{userId}}">Get new Celly token</a><br>
+      <br>
+      <button>Share Location</button>
+    {{else}}
+      <a href="https://cel.ly/api/authorize?client_id={{cellyAppId}}&redirect_uri=http://localhost:4000/cellyAuthCallback/{{userId}}">Authenticate with Celly to start sharing your location!</a>
+    {{/if}}
+  {{else}}
+    You must sign in to share your location!
+  {{/if}}
+</template>
