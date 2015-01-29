@@ -6,7 +6,7 @@ Router.route('/', function() {
   this.render('home', {
     data: function() {
       var coords = Geolocation.latLng();
-      console.log(coords);
+      console.log('coords:', coords);
       return { 
         cellyAppId: Meteor.settings.public.cellyAppId,
         userId: Meteor.userId(),
@@ -28,9 +28,8 @@ Router.route('/shareLocation', function (){
   geo = new geode(Meteor.settings.geonamesUsername, { language: 'en', country : 'US' });
   geo.request("findNearestIntersection", { lat: lat, lng: lng }, Meteor.bindEnvironment(function(err, results) {
     if (err) {
-      console.log(err);
+      console.log('find nearest intersection error:', err);
     } else {
-      console.log(results);
       var boroMap = {
         'Kings': 'Brooklyn',
         'Queens': 'Queens',
@@ -125,14 +124,13 @@ Meteor.methods({
       result.setEncoding('utf8');    
       result.on('data', Meteor.bindEnvironment(function (chunk) {
         var data = JSON.parse(chunk);
-        console.log(data);
+        console.log('celly token endpoint response:', data);
       }));
     }));
     req.on('error', Meteor.bindEnvironment(function(e) {
       console.log('celly token endpoint error:', e);
     }));
     req.end();
-    console.log(req);    
   },
 
   shareLocation: function (cellyToken, cellName, text) {
@@ -160,7 +158,7 @@ Meteor.methods({
       result.setEncoding('utf8');    
       result.on('data', Meteor.bindEnvironment(function (chunk) {
         var data = JSON.parse(chunk);
-        console.log(data);
+        console.log('celly message post response:', data);
       }));
     }));
     req.on('error', Meteor.bindEnvironment(function(e) {
@@ -168,6 +166,5 @@ Meteor.methods({
     }));
     req.write(postData);
     req.end();
-    console.log(req);
   }
 });
