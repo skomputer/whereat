@@ -1,0 +1,5 @@
+{
+  "node-geocoder": "2.14.0",
+  "querystring": "0.2.0",
+  "geode": "0.0.6"
+}

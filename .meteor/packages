@@ -11,3 +11,10 @@ iron:router
 http
 autopublish
 insecure
+
+
+mdg:geolocation
+meteorhacks:npm
+
+
+npm-container
