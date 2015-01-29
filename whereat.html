@@ -8,7 +8,7 @@
 <template name="layout">
   <header>
     {{> loginButtons}}
-    <h1>whereat</h1>
+    <h1><a href="/">whereAt</a></h1>
   </header>
 
   {{> yield}}
@@ -17,8 +17,7 @@
 <template name="home">
   {{#if currentUser}}
     {{#if currentUser.cellyToken}}
-      token: {{currentUser.cellyToken}}<br>
-      <a href="https://cel.ly/api/authorize?client_id={{cellyAppId}}&redirect_uri=http://localhost:4000/cellyAuthCallback/{{userId}}&scope=BASIC+WRITE_MSG">Get new Celly token</a><br>
+      <a href="https://cel.ly/api/authorize?client_id={{cellyAppId}}&redirect_uri={{baseUrl}}cellyAuthCallback/{{userId}}&scope=BASIC+WRITE_MSG">Get new Celly token</a><br>
       <br>
       <form id="shareLocation" action="/shareLocation">
         <input type="hidden" name="cellyToken" value="{{currentUser.cellyToken}}">
@@ -26,12 +25,13 @@
           <input type="hidden" name="lat" value="{{coords.lat}}">
           <input type="hidden" name="lng" value="{{coords.lng}}">
         {{/if}}
-        Cell: <input type="text" name="cellName"><br>
-        Message: <input type="text" name="message" placeholder="optional"><br>
+        Cell Name: <input type="text" name="cellName"><br>
+        <br>
+        Message:<br><textarea name="message" placeholder="optional" cols="30" rows="5"></textarea><br>
         <button type="submit">Send</button>
       </form>
     {{else}}
-      <a href="https://cel.ly/api/authorize?client_id={{cellyAppId}}&redirect_uri=http://localhost:4000/cellyAuthCallback/{{userId}}&scope=BASIC+WRITE_MSG">Authenticate with Celly to start sharing your location!</a>
+      <a href="https://cel.ly/api/authorize?client_id={{cellyAppId}}&redirect_uri={{baseUrl}}cellyAuthCallback/{{userId}}&scope=BASIC+WRITE_MSG">Authenticate with Celly to start sharing your location!</a>
     {{/if}}
   {{else}}
     You must sign in to share your location!

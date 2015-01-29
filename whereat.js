@@ -10,7 +10,8 @@ Router.route('/', function() {
       return { 
         cellyAppId: Meteor.settings.public.cellyAppId,
         userId: Meteor.userId(),
-        coords: coords
+        coords: coords,
+        baseUrl: Meteor.absoluteUrl()
       };
     }
   });
@@ -38,7 +39,7 @@ Router.route('/shareLocation', function (){
         'Bronx': 'The Bronx'
       };
       var data = results.intersection;
-      var boro = (data.adminName2 ? " in " + boroMap[data.adminName2] : "");
+      var boro = (data.adminName2 && (data.adminName1 == 'New York')) ? " in " + boroMap[data.adminName2] : "";
       var text = (message ? message + " " : "") + "(I'm near " + data.street1 + " and " + data.street2 + boro + ")";
       Meteor.call("shareLocation", cellyToken, cellName, text);
     }
@@ -135,13 +136,6 @@ Meteor.methods({
   },
 
   shareLocation: function (cellyToken, cellName, text) {
-    // if (!Meteor.userId()) {
-    //   throw new Meteor.Error("not-authorized");
-    // }
-
-    // if (!Meteor.user().cellyToken) {
-    //   throw new Meteor.error("no-celly-token");
-    // }
     if (!text) {
       text = "test message";
     }
